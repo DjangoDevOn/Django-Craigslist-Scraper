@@ -1,0 +1,38 @@
+{% extends "the_app/no-footer-base.html" %} {% block content %}
+
+<style>
+.helptext{
+    display:none;
+}
+
+li{
+    display:none;
+    }
+</style>
+
+<header>
+    <h1>Find <u>National</u> Developer Jobs</h1>
+    <p>Sign up to save your progress.</p>
+    <button style="height:50px; background-color:#fff;"><a style="color:#1c243c; text-decoration:none;" href="{% url 'dashboard' %}">See All Jobs</a></button>
+</header>
+
+{% for message in messages %}
+    <div class="alert alert-info text-center" role="alert">
+        {{message}}
+    </div>
+{% endfor %}
+
+
+    <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <button class="btn btn-success">SIGN UP</button>
+    </form>
+
+
+ <p class="text-center mb-5 mt-3">
+    Already a member? <a href="{% url 'login' %}">LOGIN</a>
+</p>
+
+
+
+{% endblock content %}

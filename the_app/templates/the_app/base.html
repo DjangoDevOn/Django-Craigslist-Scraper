@@ -1,0 +1,111 @@
+
+
+<!doctype html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Find National Jobs</title>
+  <meta name="description" content="Find Jobs">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-fonts@1.1.1/fonts/inter.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+
+<style>
+  @import url("https://fonts.xz.style/serve/fira-code.css");
+
+  :root {
+    --nc-font-sans: 'Fira Code', monospace;
+    --nc-font-mono: 'Fira Code', monospace;
+    --nc-tx-1: #FFFFFF;
+    --nc-tx-2: #EEEEEE;
+    --nc-bg-1: #0c142c;
+    --nc-bg-2: #1c243c;
+    --nc-bg-3: #FFFFFF;
+    /* text color */
+    --nc-lk-1: #9EE99E;
+    /* end text color */
+    --nc-lk-2: #00c200;
+    --nc-lk-tx: #000000;
+    --nc-ac-1: #4650da;
+    --nc-ac-tx: #000000;
+  }
+</style>
+
+
+<!--MOBILE STYLES-->
+<style>
+
+.account-tab{
+  text-decoration:none;
+  margin-left:80%;
+}
+
+#search-bar{
+  height:50px;
+  margin-left:25%;
+  width:300px;
+}
+
+@media only screen and (max-width: 600px) {
+
+.account-tab{
+  text-decoration:none;
+  font-size:12px;
+}
+
+#search-bar{
+  height:50px;
+  margin-left:8%;
+  width:300px;
+}
+
+
+}
+</style>
+
+</head>
+
+<body>
+
+
+    <header>
+        <h1>Find <u>National</u> Developer Jobs</h1>
+        <p>Search all of Craigslist.</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'user' %}" class="account-tab">Contacts 👤</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="account-tab">Login/Signup 🤔</a>
+        {% endif %}
+        <form action="{% url 'get-craigslist-prospects' %}" method="POST" style="text-align:right; padding:2%;" >
+        {% csrf_token %}
+          <input type="submit" style="color:#fff; background-color:purple; padding:1%; font-size:18px;" value="Get Craigslist Jobs">
+      </form>
+    </header>
+
+  {% include 'the_app/search-form.html' %}
+
+ {% block content %} {% endblock %}
+
+<pre>
+{% if user.is_authenticated %}
+<div style="text-align:center;">
+<a href="{% url 'signout' %}">Logout</a>
+</div>
+{% else %}
+<div style="text-align:center;">
+  <a style="text-decoration:none;" href="{% url 'login' %}" id="footer-login">Login/Signup 🤔</a>
+</div>
+{% endif %}
+</pre>
+
+
+    <script async defer src="https://api.newcss.net/latest.js"></script>
+    <noscript><img src="https://api.newcss.net/noscript.gif" alt=""></noscript>
+
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+
+<!doctype html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Find Jobs</title>
+  <meta name="description" content="Find Jobs">
+  <meta name="author" content="SitePoint">
+
+  <style>
+  body{
+    background-image: url("/static/paper.jpg");
+    padding:4%;
+  }
+  </style>
+</head>
+
+<body>
+
+<p style="color:green;"><i>{{count}} Posts</i></p>
+
+    <form action="{% url 'get-craigslist-prospects' %}" method="POST" style="text-align:right; padding:2%;" >
+			{% csrf_token %}
+				<input type="submit" style="color:#fff; background-color:purple; padding:1%; font-size:18px;" value="Get Craigslist Jobs">
+	  </form>
+
+
+    <form action="{% url 'get-yellow-page-prospects' %}" method="POST" style="text-align:right; padding:2%;" >
+			{% csrf_token %}
+				<input type="submit" style="color:#000; background-color:yellow; padding:1%; font-size:18px;" value="Get Yellow Page Prospects">
+	  </form>
+
+    {% for prospect in current_prospects %}
+    <br>
+      {% if prospect.contacted == True %}
+        <span style="color:green;">Contacted</span>
+      {% endif %}
+      <a style="color:#000; text-decoration: none;" href="{{prospect.link}}" target="__blank"><b>{{prospect.post_title}}</b></a>
+      <a href="{% url 'contacted' prospect.id %}" style="color:green; padding:1%; text-decoration: none;"><i>&#10003;</i></a>
+      <a href="{% url 'delete' prospect.id %}" style="color:red; text-decoration: none;"><i>&#10007;</i></a>
+      <br><br><hr>
+    {% endfor %}
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "the_app/base.html" %} {% block content %}
+
+{% if object_list %}
+<div style="text-align:center;">
+<p>{{search_count}} results for "{{query}}"</p>
+</div>
+<br>
+<br>
+<button style="height:50px; border-color:#00c200; background-color:#1c243c;"><a style="text-decoration:none;" href="{% url 'dashboard' %}">See All Jobs</a></button>
+<br><br><br>
+    {% for x in object_list %}
+        <a style="text-decoration: none;" href="{{x.link}}" target="__blank"><b>{{x.post_title|title}}</b></a>
+        {% if user in x.users.all %} <span style="padding:1%; text-decoration: none; color:red;"><span style="color:#fff;">Contacted</span> <i>&#10003;</i></span> {% else %}<a href="{% url 'contacted' x.id %}" style="padding:1%; text-decoration: none;"><i><span style="color:#fff;">Contact</span> &#10003;</i></a>{% endif %}
+        <br><br><hr>
+    {% endfor %}
+{% else %}
+        <kbd>{{count}} Total Jobs</kbd>
+        <br><br><br>
+        {% for prospect in current_prospects %}
+        <br>
+        <a style="text-decoration: none;" href="{{prospect.link}}" target="__blank"><b>{{prospect.post_title|title}}</b></a>
+        {% if user in prospect.users.all %} <span style="padding:1%; text-decoration: none; color:red;"><span style="color:#fff;">Contacted</span> <i>&#10003;</i></span> {% else %}<a href="{% url 'contacted' prospect.id %}" style="padding:1%; text-decoration: none;"><i><span style="color:#fff;">Contact</span> &#10003;</i></a>{% endif %}
+        <br><br><hr>
+    {% endfor %}
+{% endif %}
+
+
+<br><br>
+
+
+{% endblock content %}
